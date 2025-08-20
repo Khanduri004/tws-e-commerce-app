@@ -26,7 +26,7 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
 
-    instance_types = ["t2.large"]
+    instance_types = ["t3.micro"]
 
     attach_cluster_primary_security_group = true
 
