@@ -71,7 +71,7 @@ resource "aws_security_group" "allow_user_to_connect" {
 
 resource "aws_instance" "testinstance" {
   ami             = data.aws_ami.os_image.id
-  instance_type   = t2.micro  
+  instance_type   = "t2.micro"  
   key_name        = aws_key_pair.deployer.key_name
   security_groups = [aws_security_group.allow_user_to_connect.name]
   user_data = file("${path.module}/install_tools.sh")
