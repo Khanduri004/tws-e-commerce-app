@@ -15,6 +15,8 @@ locals {
 
 provider "aws" {
 
+  source  = "hashicorp/aws"
+  version = "~> 4.67"
   region = local.region
 
 }
