@@ -12,14 +12,14 @@ locals {
   }
 
 }
-required_providers {
+terraform {
+  required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.67"
     }
   }
 }
-
 provider "aws" {
   region = "us-east-1" 
   # credentials come from env vars, shared config, or IAM role
