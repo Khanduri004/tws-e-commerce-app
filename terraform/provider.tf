@@ -21,6 +21,6 @@ terraform {
   }
 }
 provider "aws" {
-  region = "local.region" 
+  region = local.region
   # credentials come from env vars, shared config, or IAM role
 }
