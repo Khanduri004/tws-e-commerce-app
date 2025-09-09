@@ -1,9 +1,9 @@
 module "eks" {
-
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.15.1"
+  version = "20.24.0" # latest at the time of writing
 
   cluster_name                   = local.name
+  cluster_version                = "1.29"
   cluster_endpoint_public_access = true
 
   cluster_addons = {
@@ -23,42 +23,34 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.intra_subnets
 
   # EKS Managed Node Group(s)
-
   eks_managed_node_group_defaults = {
-
-    instance_types = ["t2.large"]
-
+    instance_types                        = ["t2.large"]
     attach_cluster_primary_security_group = true
-
   }
 
-
   eks_managed_node_groups = {
-
     tws-demo-ng = {
       min_size     = 2
       max_size     = 3
       desired_size = 2
 
-      instance_types = ["t2.large"]
-      capacity_type  = "SPOT"
-
-      disk_size = 35 
-      use_custom_launch_template = false  # Important to apply disk size!
+      instance_types              = ["t2.large"]
+      capacity_type               = "SPOT"
+      disk_size                   = 35
+      use_custom_launch_template  = false
 
       tags = {
-        Name = "tws-demo-ng"
+        Name        = "tws-demo-ng"
         Environment = "dev"
-        ExtraTag = "e-commerce-app"
+        ExtraTag    = "e-commerce-app"
       }
     }
   }
- 
+
   tags = local.tags
-
-
 }
 
+# Get running worker nodes
 data "aws_instances" "eks_nodes" {
   instance_tags = {
     "eks:cluster-name" = module.eks.cluster_name
